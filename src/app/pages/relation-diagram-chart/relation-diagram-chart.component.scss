@@ -1,0 +1,514 @@
+.allFlex{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.bgImgC{
+   width: 100%;
+   height: 100%;
+}
+
+.childOneFlex{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  overflow: auto;
+  z-index: 2;
+}
+.topOne{
+  width: 96%;
+  height: 37%;
+  min-width: 1280px;
+  min-height: 214px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.OneChartsTopClass{
+  width: 25%;
+  display: flex;
+  height: 85%;
+  background-color: rgba( 255 , 255 ,255, 0.1 );
+  border-radius: 12px;
+}
+
+
+.centerTwo{
+  width: 96%;
+  height: 15%;
+  min-width: 1280px;
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+}
+.centerClassOne{
+  width: 32%;
+  display: flex;
+  height: 75%;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 12px;
+}
+.imgIcon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 19%;
+  height: 100%;
+}
+.spanText{
+  display: flex;
+  align-items: center;
+  width: 30%;
+/*  // margin-left: 15px;*/
+  height: 100%;
+}
+.numClass{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  width: 48%;
+}
+
+.endThree{
+  width: 96%;
+  height: 50%;
+  min-width: 1280px;
+  min-height: 230px;
+  display: flex;
+}
+.tableAllClass{
+  width: 100%;
+  height: 96%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: rgba( 255 , 255 ,255, 0.1 );
+  border-radius: 12px;
+}
+.table-title{
+  width: 100%;
+  height: 12%;
+  min-height: 44px;
+  border-bottom: 1px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.table-text-size{
+  font-size: 17px;
+  margin-left: 15px;
+  color: #ffffff;
+}
+
+.end-table-search{
+  display: flex;
+  width: 100%;
+  height: 18%;
+  min-height: 64px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
+
+.oneSelect{
+  width: 16%;
+  height: 60%;
+  display: flex;
+}
+
+.inputText{
+  width: 20%;
+  height: 60%;
+  display: flex;
+  .inputCla{
+    color: #ffffff;
+  }
+  .btuColor{
+    //background-color: #000000;
+    //opacity: 0;
+    img{
+      width: 24px;
+      height: 24px;
+    }
+    mat-icon{
+      width: 24px;
+      height: 24px;
+      color: #FFFFFF;
+    }
+  }
+}
+
+.form-table-class{
+   width: 100%;
+   height: 230px;
+  //  min-height: 150px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   .table-class-all{
+      width: 98%;
+      height: 230px;
+       /// min-height: 150px;
+      display: flex;
+   }
+}
+
+.buss-data-table {
+  flex: 1 1 auto;
+  // border-bottom: 1px solid rgba(0, 0, 0, .12);
+  overflow: auto;
+  width: 100%;
+  max-height: 230px;
+  // min-height: 150px;
+  border-radius: 12px;
+  color: #FFFFFF;
+  background-color: rgba(255,255,255,0);
+  user-select: text !important;
+
+  .mat-header-row {
+    min-height: 50px;
+    font-size: 12px;
+    color: #FFFFFF;
+    user-select: text !important;
+  }
+  .mat-header-cell {
+    color: #FFFFFF;
+    user-select: text !important;
+  }
+  .mat-cell {
+    min-width: 0;
+    max-height: 150px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #FFFFFF;
+    user-select: text !important;
+    span{
+      user-select: text !important;
+    }
+  }
+
+  .struts-indicator {
+    display: inline-block;
+    vertical-align: middle;
+    width: 8px;
+    height: 8px;
+    color: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 8px;
+    & + span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .mat-column-id_job {
+    flex: 0 1 135px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 5px;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: text !important;
+  }
+  .mat-column-jobgroup{
+    flex: 0 1 165px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 5px;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: text !important;
+  }
+
+  .mat-column-jobname{
+    flex: 0 1 220px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: text !important;
+  }
+
+  .mat-column-startdate{
+    flex: 0 1 135px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: text !important;
+  }
+
+  .mat-column-enddate{
+    flex: 0 1 135px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: text !important;
+  }
+  .mat-column-successcount{
+    flex: 0 1 135px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: text !important;
+  }
+  .mat-column-failcount{
+    flex: 0 1 135px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: text !important;
+  }
+  .mat-column-operation{
+    flex: 0 1 135px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: text !important;
+  }
+}
+
+a{
+cursor: pointer;
+}
+
+.font-color-text{
+  font-size: 16px;
+  color: aliceblue;
+}
+
+.m-r-15{
+  margin-right: 15px;
+}
+.m-r-29{
+  margin-right: 29px;
+}
+
+.center-bg-color-right{
+  background-color: #00A9D4;
+}
+
+.center-bg-color-error{
+  background-color: #DA5F01;
+}
+
+.imgIcon-w-h{
+  width: 60px;
+  height: 60px;
+}
+
+.centerFontClass{
+  font-size: 20px;
+  color: #FFFFFF;
+}
+.centerFontNumClass{
+  font-size: 42px;
+  color: #FFFFFF;
+}
+
+.form-filed-color{
+  color: #555555;
+}
+
+.mat-filed-96-50{
+  mat-form-field{
+    width: 96%;
+    height: 100%;
+    border-radius: 12px;
+    background-color: rgba(0,0,0,0.2);
+    color:  rgba(255,255,255,0.5);
+    align-items: center;
+    text-decoration: none;
+    mat-select{
+      text-decoration: none;
+      mat-option{
+        text-decoration: none;
+      }
+    }
+    .mat-form-field-wrapper{
+      height: 100%;
+    }
+  }
+  ::ng-deep {
+    .mat-select-value {
+      color:  rgba(255,255,255,0.7);
+    }
+    .mat-select-arrow {
+      color:  rgba(255,255,255,0.7);
+      // margin: 14px 4px 4px 4px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      height: 35px;
+      color:rgba(0, 0,0, 0.1);
+    }
+    .mat-input-element {
+      caret-color: #ffffff;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+      padding: 0.7em 0 1em 0;
+    }
+    .mat-form-field-flex{
+      height: 35px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+      padding: 0 0.5em;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+      margin: 0;
+    }
+    .mat-form-field-wrapper {
+      padding-bottom: 1.1em;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-label {
+      top: 2.34375em;
+      margin-top: -0.7em;
+    }
+    .mat-form-field-infix {
+      border-top: .14375em solid transparent;
+    }
+    .mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline-thick {
+      opacity: 1;
+      color:rgba(0, 0,0, 0.1);
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-label {
+      color: rgba(105,105,106,.8);
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+      color:rgba(0, 0,0, 0.1);
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-underline{
+      height: 0px;
+      position: absolute;
+      width: 100%;
+      pointer-events: none;
+      transform: scaleY(0);
+    }
+    .mat-form-field-underline {
+      position: absolute;
+      width: 100%;
+      pointer-events: none;
+      transform: scaleY(0);
+    }
+  }
+}
+
+.mat-filed-96-50-write{
+  mat-form-field{
+    width: 96%;
+    height: 100%;
+    border-radius: 12px;
+    background-color: rgba(0,0,0,0.2);
+    color:  rgba(255,255,255,0.5);
+    align-items: center;
+    text-decoration: none;
+    mat-select{
+      text-decoration: none;
+      mat-option{
+        text-decoration: none;
+      }
+    }
+    .mat-form-field-wrapper{
+      height: 100%;
+    }
+  }
+  ::ng-deep {
+    .mat-select-value {
+      color:  rgba(255,255,255,0.7);
+    }
+    .mat-select-arrow {
+      color:  rgba(255,255,255,0.7);
+      // margin: 14px 4px 4px 4px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      height: 35px;
+      color:rgba(0, 0,0, 0.1);
+    }
+    .mat-input-element {
+      caret-color: #ffffff;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+      padding: 0.7em 0 1em 0;
+    }
+    .mat-form-field-flex{
+      height: 35px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+      padding: 0 0.5em;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+      margin: 0;
+    }
+    .mat-form-field-wrapper {
+      padding-bottom: 1.1em;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-label {
+      top: 2.34375em;
+      margin-top: -0.7em;
+    }
+    .mat-form-field-infix {
+      border-top: .14375em solid transparent;
+    }
+    .mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline-thick {
+      opacity: 1;
+      color:rgba(0, 0,0, 0.1);
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-label {
+      color: rgba(255,255,255,.9);
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+      color:rgba(0, 0,0, 0.1);
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-underline{
+      height: 0px;
+      position: absolute;
+      width: 100%;
+      pointer-events: none;
+      transform: scaleY(0);
+    }
+    .mat-form-field-underline {
+      position: absolute;
+      width: 100%;
+      pointer-events: none;
+      transform: scaleY(0);
+    }
+  }
+}

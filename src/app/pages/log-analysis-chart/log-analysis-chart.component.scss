@@ -1,0 +1,428 @@
+.logAllFlex{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  .logBgImgC{
+    width: 100%;
+    height: 100%;
+    min-width: 1526px;
+    min-height: 754px;
+  }
+
+  .logChildOneFlex{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    overflow: auto;
+    z-index: 2;
+    .logAll{
+      width: 100%;
+      height: 100%;
+      min-width: 1526px;
+      min-height: 754px;
+    }
+  }
+/*  .dialog-div{
+
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);
+    opacity: 1;
+    z-index: 100;
+  }*/
+
+}
+
+::ng-deep{
+  #DetailTemplate_{
+    padding: 0 !important;
+    .mat-dialog-container{
+      padding: 0 !important;
+    }
+    mat-dialog-content{
+      margin: 0px;
+    }
+  }
+}
+
+
+
+.templateAll1{
+  width: 80%;
+  height: 80%;
+  display: flex;
+  position: absolute;
+  z-index: 99999;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 3px;
+  background-color: #FFFFFF;
+  -webkit-box-shadow: rgba(0,0,0,0.2) 0px 0px 10px;
+  -moz-box-shadow: rgba(0,0,0,0.2) 0px 0px 10px;
+  box-shadow: rgba(0,0,0,0.2) 0px 0px 10px;
+  .temTitle{
+    width: 100%;
+    height: 15%;
+    // background-color: #63a35c;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    .btu-select{
+      width: 34%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    .title-text{
+      width: 30%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      span{
+        color: #222222;
+        font-weight: bold;
+        padding-left: 24px;
+      }
+    }
+  }
+  .temp-table-class{
+    width: 100%;
+    height: 80%;
+    .temp-data-table {
+      flex: 1 1 auto;
+      overflow: auto;
+      width: 100%;
+      height: 80%;
+      max-height: 400px;
+      border-radius: 12px;
+      color: #000000;
+    //  padding-left: 24px;
+      background-color: rgba(255,255,255,1);
+
+
+      .mat-header-row {
+        width: 100%;
+        min-height: 50px;
+        font-size: 12px;
+        color: #000000;
+        // background-color: #00A9D4;
+      }
+      .mat-header-cell {
+        width: 25%;
+        color: #000000;
+      }
+
+      /** 鼠标移动行动画效果**/
+      .mat-row:hover {
+        cursor: pointer;
+        background-color: #f5f5f5;
+      }
+
+      .mat-row:active {
+        cursor: pointer;
+        background-color: #efefef;
+      }
+
+
+      .mat-cell {
+        width: 25%;
+        min-width: 0;
+        // height: 50px;
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        font-size: 12px;
+        color: #000000;
+        span{
+          user-select: text !important;
+        }
+      }
+
+      .struts-indicator {
+        display: inline-block;
+        vertical-align: middle;
+        width: 8px;
+        height: 8px;
+        color: #000000;
+        border-radius: 4px;
+        margin-right: 8px;
+        & + span {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+
+      .mat-column-id_job {
+        flex: 0 1 135px;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-right: 5px;
+        justify-content: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        user-select: text !important;
+      }
+      .mat-column-jobname {
+        flex: 0 1 235px;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-right: 5px;
+        justify-content: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        user-select: text !important;
+      }
+      .mat-column-enddate {
+        flex: 0 1 145px;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-right: 5px;
+        justify-content: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        user-select: text !important;
+      }
+      .mat-column-logdate {
+        flex: 0 1 145px;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-right: 5px;
+        justify-content: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        user-select: text !important;
+      }
+      .mat-column-status {
+        flex: 0 1 135px;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-right: 5px;
+        justify-content: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        user-select: text !important;
+      }
+      .mat-column-log_field {
+        flex: 0 1 145px;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-right: 5px;
+        justify-content: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        user-select: text !important;
+      }
+
+
+      .logFilDh{
+
+        overflow: auto;
+      }
+
+      tr.example-element-row:not(.example-expanded-row):hover {
+        cursor: pointer;
+        background: #f5f5f5;
+      }
+
+      tr.example-element-row:not(.example-expanded-row):active {
+        cursor: pointer;
+        background: #efefef;
+      }
+
+      tr.example-detail-row{
+        height: 0px;
+      }
+
+      tr.example-element-detail{
+        overflow: hidden;
+        display: flex;
+      }
+    }
+  }
+
+
+}
+
+.temp-oneSelect{
+  width: 48%;
+  height: 40%;
+  display: flex;
+}
+.temp-input{
+  width: 28%;
+  height: 40%;
+  display: flex;
+  button{
+    background-color: #24C6C8;
+  }
+}
+.btuColor{
+  width: 20%;
+  height: 40%;
+  button{
+    background-color: #24C6C8;
+  }
+}
+
+.mat-filed-96-50-write{
+  mat-form-field{
+    width: 96%;
+    height: 100%;
+    border-radius: 12px;
+    // background-color: rgba(0,0,0,0.2);
+    // color:  rgba(255,255,255,0.5);
+    align-items: center;
+    text-decoration: none;
+    mat-select{
+      text-decoration: none;
+      mat-option{
+        text-decoration: none;
+      }
+    }
+    .mat-form-field-wrapper{
+      height: 100%;
+    }
+  }
+  ::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      height: 35px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+      padding: 0.7em 0 1em 0;
+    }
+    .mat-form-field-flex{
+      height: 35px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+      padding: 0 0.5em;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+      margin: 0;
+    }
+    .mat-form-field-wrapper {
+      padding-bottom: 1.1em;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-label {
+      top: 2.34375em;
+      margin-top: -0.7em;
+    }
+    .mat-form-field-infix {
+      border-top: .14375em solid transparent;
+    }
+    .mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline-thick {
+      opacity: 1;
+      color:rgba(0, 0,0, 1);
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-label {
+      color: rgba(0, 0,0, 1);
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+      color:rgba(0, 0,0, 1);
+    }
+    /* .mat-form-field-appearance-legacy .mat-form-field-underline{
+       height: 0px;
+       position: absolute;
+       width: 100%;
+       pointer-events: none;
+       transform: scaleY(0);
+     }
+     .mat-form-field-underline {
+       position: absolute;
+       width: 100%;
+       pointer-events: none;
+       transform: scaleY(0);
+     }*/
+  }
+}
+
+.mat-input-te{
+  mat-form-field{
+    width: 100%;
+    height: 400px;
+    .mat-form-field-wrapper{
+      height: 400px;
+    }
+    textarea{
+      height: 350px;
+      overflow: auto;
+    }
+  }
+  ::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      height: 400px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+      padding: 0em ;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+      margin: 0em;
+    }
+    .mat-form-field-flex{
+      //  height: 35px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-label {
+      top: 2.884375em;
+      margin-top: -0.7em;
+    }
+  }
+}
+
+.dialog-manage-title{
+  display: flex;
+  width: 100%;
+  height: 12%;
+  justify-content: space-between;
+  align-items: center;
+  // background-color: #2B96D8;
+  .mat-dialog-title-tips{
+    display: flex;
+    width: 98%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    .title_dialog_{
+      font-size: 1.3rem;
+      color: #000000;
+    }
+    button{
+      mat-icon{
+        color: #24C6C8;
+      }
+    }
+  }
+
+}
+.content-class{
+  width: 100%;
+  height: 400px;
+  //  overflow: auto;
+}
+
+::ng-deep{
+  #DetailMatDialogs{
+    .mat-dialog-title {
+      margin: 0px;
+    }
+    .mat-dialog-content{
+      overflow: hidden;
+    }
+  }
+}

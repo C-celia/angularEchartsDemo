@@ -1,0 +1,60 @@
+
+<div class="templateAll" >
+  <div class="temTitle">
+    <div class="title-text">
+         <span>监控记录详情</span>
+    </div>
+    <div class="btu-select">
+      <div class="temp-oneSelect mat-filed-96-50-write">
+        <mat-form-field [floatLabel]="'auto'"  appearance="outline">
+          <mat-select [(value)]="tableCell.selectID"  (selectionChange)="initTableData()">
+            <mat-option  *ngFor="let d of tableCell.selectIDSource" [value]="d.value"> {{d.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="temp-input">
+        <button mat-button (click)="initTableData()">搜索</button>
+      </div>
+      <div class="btuColor"><button  mat-icon-button 	 mat-dialog-close ><mat-icon>clear</mat-icon></button></div>
+    </div>
+
+  </div>
+  <div class="temp-table-class">
+    <mat-table  [dataSource]="tableCell.bussTableSource" multiTemplateDataRows class="temp-data-table">
+      <ng-container  matColumnDef="{{cou}}" *ngFor="let cou of tableCell.bussTableCol ; index as k;">
+        <mat-header-cell   *matHeaderCellDef>
+          <div *ngFor="let heard of tableCell.bussTableHer"> {{heard[cou]}}</div>
+        </mat-header-cell>
+        <mat-cell  *matCellDef="let element ; index as i;" >
+          <ng-container *ngIf="'log_field' !== cou">
+            <span [matTooltip]="element[cou]">{{element[cou]}} </span>
+          </ng-container>
+          <ng-container *ngIf="'log_field' === cou">
+            <a (click)="openDialog(DetailMatDialog , element)">查看</a>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row
+        *matHeaderRowDef="tableCell.bussTableCol; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: tableCell.bussTableCol" ></mat-row>
+    </mat-table>
+    <mat-paginator  [pageSize]="6" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+
+<ng-template #DetailMatDialog class="ng-template-me-dialog">
+  <div mat-dialog-title class="dialog-manage-title">
+    <div class="mat-dialog-title-tips">
+      <div ><span class="title_dialog_">操作详情</span></div>
+      <div><button  mat-icon-button 	 mat-dialog-close ><mat-icon>clear</mat-icon></button></div>
+    </div>
+  </div>
+  <mat-dialog-content>
+          <div class="content-class mat-input-te">
+            <mat-form-field>
+              <textarea matInput autocomplete="off"   value="{{tableCell.jobDetail}}"></textarea>
+            </mat-form-field>
+          </div>
+  </mat-dialog-content>
+</ng-template>

@@ -1,0 +1,122 @@
+<div class="allFlex">
+      <img src="assets\\images\\bg.jpg" class="bgImgC">
+     <div class="childOneFlex">
+       <!--最上面的部分四个图表-->
+       <div class="topOne">
+             <div class="OneChartsTopClass m-r-15"  #TaskExecutionTime><!--任务执行时间--></div>
+             <div class="OneChartsTopClass m-r-15" #TaskCompletionRate><!--任务完成率--></div>
+             <div class="OneChartsTopClass m-r-15" #TaskTypeProportion><!--任务类型占比--></div>
+             <div class="OneChartsTopClass" #TaskQuantity><!--任务数量--></div>
+       </div>
+
+       <!--中间部分-->
+       <div class="centerTwo" >
+         <!--总作业任务数-->
+         <div class="centerClassOne center-bg-color-right  m-r-29" fxLayoutGap="15px">
+           <div class="imgIcon">
+                <img src="assets\\images\\appointment.png" class="imgIcon-w-h">
+           </div>
+           <div class="spanText">
+             <span class="centerFontClass">总作业任务数</span>
+           </div>
+           <div class="numClass">
+              <span class="centerFontNumClass">{{taskCompletionRateDataS.allNum}}</span>
+           </div>
+         </div>
+         <!--总成功次数-->
+         <div class="centerClassOne center-bg-color-right  m-r-29" fxLayoutGap="15px">
+           <div class="imgIcon">
+             <img src="assets\\images\\checkmark_circle_outlined.png" class="imgIcon-w-h">
+           </div>
+           <div class="spanText">
+             <span class="centerFontClass">总成功次数</span>
+           </div>
+           <div class="numClass">
+             <span class="centerFontNumClass">{{taskCompletionRateDataS.Success}}</span>
+           </div>
+         </div>
+         <!--总失败次数-->
+         <div class="centerClassOne center-bg-color-error" fxLayoutGap="15px">
+           <div class="imgIcon">
+             <img src="assets\\images\\clear_circle_outlined.png" class="imgIcon-w-h">
+           </div>
+           <div class="spanText">
+             <span class="centerFontClass">总失败次数</span>
+           </div>
+           <div class="numClass">
+             <span class="centerFontNumClass">{{taskCompletionRateDataS.Fail}}</span>
+           </div>
+         </div>
+       </div>
+
+       <!--下面表单部分-->
+       <div class="endThree">
+         <div class="tableAllClass">
+           <!--标题部分-->
+             <div class="table-title">
+                    <span class="table-text-size">作业监控记录</span>
+             </div>
+           <!--选择部分-->
+           <div class="end-table-search">
+             <!--监控状态-->
+             <div class="oneSelect mat-filed-96-50-write">
+               <mat-form-field [floatLabel]="'auto'" >
+                 <mat-select [(value)]="tableCell.MonitorValue"  placeholder="监控状态"   (selectionChange)="initTableDataSource()">
+                   <mat-option  *ngFor="let d of tableCell.MonitorValueSource" [value]="d.value"> {{d.name}}</mat-option>
+                 </mat-select>
+               </mat-form-field>
+             </div>
+             <!--选择分类-->
+             <div class="oneSelect mat-filed-96-50-write">
+               <mat-form-field [floatLabel]="'auto'" >
+                 <mat-select [(value)]="tableCell.selectType"  placeholder="选择分类"  (selectionChange)="initTableDataSource()">
+                   <mat-option  *ngFor="let d of tableCell.selectTypeSource" [value]="d.value"> {{d.name}}</mat-option>
+                 </mat-select>
+               </mat-form-field>
+             </div>
+             <!--输入信息-->
+             <div class="inputText mat-filed-96-50" >
+               <mat-form-field [floatLabel]="'never'">
+                 <input matInput  autocomplete="off" type="text" value="{{tableCell.inputData}}" placeholder="请输入作业名称..."  class="inputCla" id="inputCla">
+                 <button  mat-icon-button   matSuffix class="btuColor" (click)="initTableDataSource()">
+                   <!--<mat-icon >search</mat-icon>-->
+                   <img src="assets\\images\\search.png">
+                 </button>
+               </mat-form-field>
+             </div>
+           </div>
+           <!--表单部分-->
+           <div class="form-table-class">
+                <div class="table-class-all">
+                  <mat-table [dataSource]="tableCell.bussTableSource" class="buss-data-table">
+                    <ng-container *ngFor="let cou of tableCell.bussTableCol ; index as k;">
+                      <ng-container matColumnDef={{cou}}>
+                        <mat-header-cell *matHeaderCellDef>
+                          <div *ngFor="let heard of tableCell.bussTableHer"> {{heard[cou]}}</div>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element ; index as i;">
+                          <ng-container *ngIf="'operation' === cou">
+                            <div>
+                              <a (click)="openDetailTemplate(DetailTemplate , element)">详情</a>
+                            </div>
+                          </ng-container>
+                          <ng-container *ngIf="'operation' !== cou">
+                            <span [matTooltip]="element[cou]">{{element[cou]}} </span>
+                          </ng-container>
+                        </mat-cell>
+                      </ng-container>
+
+                    </ng-container>
+                    <mat-header-row
+                      *matHeaderRowDef="tableCell.bussTableCol; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: tableCell.bussTableCol;"></mat-row>
+                  </mat-table>
+                </div>
+           </div>
+         </div>
+       </div>
+     </div>
+</div>
+<ng-template #DetailTemplate >
+  <app-detail-template [jobName]="tableCell.JobName"></app-detail-template>
+</ng-template>
