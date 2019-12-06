@@ -1,12 +1,13 @@
 import {Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {HttpClient} from '@angular/common/http';
 import {LogAnalysisService} from '../../service/log-analysis/log-analysis.service';
 import {EventManager} from '@angular/platform-browser';
-import { Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {OtherParameters} from '../../service/log-analysis/OtherParameters';
 import {Subject} from 'rxjs/internal/Subject';
 import {takeUntil} from 'rxjs/operators';
+import {EleEntity} from '../detail-template/detail-template.component';
 @Component({
   selector: 'app-relation-diagram-chart',
   templateUrl: './relation-diagram-chart.component.html',
@@ -20,6 +21,7 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
   @ViewChild('TaskTypeProportion', {static: true}) TaskTypeProportion: ElementRef; // 任务类型占比
   @ViewChild('TaskQuantity', {static: true}) TaskQuantity: ElementRef; // 任务数量
 
+  JobName: string;
   echarts: any; //
   eChartsSource: EChartSource; // 我自己的图表 echarts类集合
   taskExecutionTimeDataS: TaskExecutionTimeDataSource; // 任务时间执行图表数据变量集合
@@ -31,7 +33,7 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
     private zone: NgZone ,
     private http: HttpClient,
     public dialog: MatDialog,
-   // private snackBar: MatSnackBar,
+    private routeInfo: ActivatedRoute,
     private logAnalysisService: LogAnalysisService,
     private eventManager: EventManager,
     private document: ElementRef,
@@ -39,17 +41,31 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
   ) { }
 
   ngOnInit() {
-    this.eventManager.addGlobalEventListener('window', 'keydown.backspace', () => {
-      this.router.navigateByUrl('/logChart');
-    });
+    this.routeInfo.params.pipe(takeUntil(this._unsubscribeAll)).subscribe((param: Params) => {
+          this.JobName = param.id;
+          // console.log(this.JobName);
+      });
+
     // 实例化echarts图表数据变量
     this.initECharts();
     // 设置关于echarts
     this.intiAllECharts();
     // 初始化各个变量
     this.initChartEntity();
+
     this.initAllData();
+    this.eventManager.addGlobalEventListener('window', 'keydown.backspace', () => {
+      this.router.navigateByUrl('/logChart');
+    });
+
+
   }
+
+
+  scrollT(e){
+    console.log(e);
+  }
+
 
   // 初始化图表变量
   initChartEntity(){
@@ -58,7 +74,21 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
     this.taskTypeProportionDataS = new TaskTypeProportionDataSource();
     this.taskQuantityDataS = new TaskQuantityDataSource();
     this.tableCell = new TableCell();
-    this.tableCell.MonitorValue = '监控状态';
+    this.tableCell.bussTableHer = [
+      {id_job: '记录编号', jobname: '作业名称' , enddate: '执行开始时间' , logdate: '执行结束时间'  , status: '运行状态' , log_field: '查看详情'}  ,
+    ];
+    this.tableCell.bussTableCol =  ['id_job' , 'jobname' , 'enddate' , 'logdate' , 'status' , 'log_field'];
+    this.tableCell.selectID = 'id_job';
+    this.tableCell.jobDetail = '';
+    this.tableCell.selectIDSource = [
+      /* {value: '1' , name: '1'},
+       {value: '2' , name: '2'},
+       {value: '3' , name: '3'},*/
+    ];
+
+
+
+   /* this.tableCell.MonitorValue = '监控状态';
     this.tableCell.MonitorValueSource = [
       {value: '' , name: '全部'},
       {value: 'start' , name: '开始'},
@@ -71,8 +101,10 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
       {id_job: '记录编号', jobgroup: '分类' , jobname: '作业名称' , startdate: '上次执行时间'
         , enddate: '下次执行时间' , successcount: '作业执行成功次数', failcount: '作业执行失败次数', operation: '操作'}  ,
     ];
-    this.tableCell.bussTableCol =  ['id_job' , 'jobgroup' , 'jobname' , 'startdate' , 'enddate' , 'successcount' , 'failcount' , 'operation'];
+    this.tableCell.bussTableCol =  ['id_job' , 'jobgroup' , 'jobname' , 'startdate' , 'enddate' , 'successcount' , 'failcount' , 'operation'];*/
     }
+
+
 
 
   // 初始化图表数据
@@ -84,15 +116,20 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
       this.initTaskExecutionTimeData(); // 获取任务时间执行图表数据
       this.initTaskCompletionRateData(); // 获取任务完成率图表数据
       this.initTaskTypeProportionData();  // 获取任务类型占比 // 获取任务数量数据
-      this.initTableDataSource(); // 获取下面表单的数据
+      this.initTableDataDetailSource(); // 获取下面表单的数据 （总）
     });
   }
 
   // 获取任务时间执行图表数据
   initTaskExecutionTimeData(){
-    const p_v = { 'method' : OtherParameters.JobExcuteTime};
+    const p_v = '{\n' +
+      '"method":"' + OtherParameters.JobExcuteTime + '",' +
+      '"data":{\n' +
+      '"transname":"' + this.JobName + '"\n' +
+      '}\n' +
+      '}' ;
      this.logAnalysisService.getSuccessAndFailNum(p_v).pipe(takeUntil(this._unsubscribeAll)).subscribe( res => {
-          const errorCode = res['header'].errCode;
+       const errorCode = res['header'].errCode;
           if (errorCode === '0'){
             const data = res['data'];
             for (let i = 0 ; i < data.length ; i++ ){
@@ -105,16 +142,19 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
             // this.snackBar.open(res['header'].errMsg, 'X');
           }
 
-     },
-       error1 => { // this.snackBar.open('任务时间执行图表数据出错' + error1.message, 'X');
      });
   }
 
   // 获取任务完成率图表数据
   initTaskCompletionRateData(){
-    const p_v = { 'method' : OtherParameters.SuccessAndFailNum};
+    const p_v = '{\n' +
+      '"method":"' + OtherParameters.SuccessAndFailNum + '",\n' +
+      '"data":{\n' +
+      '"transname":"' + this.JobName + '"\n' +
+      '}\n' +
+      '}';
     this.logAnalysisService.getSuccessAndFailNum(p_v).pipe(takeUntil(this._unsubscribeAll)).subscribe( res => {
-        const errorCode = res['header'].errCode;
+      const errorCode = res['header'].errCode;
         if (errorCode === '0'){
           const data = res['data'];
           for (let i = 0 ; i < data.length ; i++ ){
@@ -132,9 +172,6 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
           // this.snackBar.open(res['header'].errMsg, 'X');
         }
 
-    },
-      error1 => {
-      // this.snackBar.open('获取成功与失败次数出错' + error1.message, 'X');
     });
 
 
@@ -142,154 +179,71 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
 
   // 获取任务类型占比数据 // 获取任务数量数据
   initTaskTypeProportionData(){
-    const p_v = { 'method' : OtherParameters.JobTypeAndNum};
+    const p_v = '{"method":"' + OtherParameters.JobTypeAndNum + '" }';
     this.logAnalysisService.getSuccessAndFailNum(p_v).pipe(takeUntil(this._unsubscribeAll)).subscribe( res1 => {
+
         const errorCode = res1['header'].errCode;
+
         if (errorCode === '0'){
           const data = res1['data'];
           for ( let i = 0 ; i < data.length; i ++ ){
             this.taskTypeProportionDataS.value[i] =  {value: data[i].num, name: data[i].jobgroup};
             this.taskQuantityDataS.title[i] = data[i].jobgroup;
             this.taskQuantityDataS.value[i] = data[i].num;
-            this.tableCell.selectTypeSource [ i + 1 ] = {value: data[i].jobgroup , name: data[i].jobgroup};
+            // this.tableCell.selectTypeSource [ i + 1 ] = {value: data[i].jobgroup , name: data[i].jobgroup};
           }
           this.SetTaskTypeProportionChart();
           this.TaskQuantityChart();
         } else {
           // this.snackBar.open(res1['header'].errMsg, 'X');
         }
-
-
-      },
-      error1 => {
-     // this.snackBar.open('获取任务类型占比数据出错' + error1.message, 'X');
-    });
+      } );
   }
 
-  // 获取表格数据
-  initTableDataSource(){
-
-    let  MonitorValue = '';
-    let  selectType = '';
-    if (this.tableCell.MonitorValue === '监控状态'){
-          MonitorValue = '';
+  initTableDataDetailSource(){
+  /*  let jobID = '';
+    if (this.tableCell.selectID === 'id_job' || this.tableCell.selectID === '全部') {
+      jobID = '';
     } else {
-          MonitorValue = this.tableCell.MonitorValue;
-    }
-    if (this.tableCell.selectType === '请选择分类' || this.tableCell.selectType === '全部'){
-          selectType = '';
-    } else {
-          selectType = this.tableCell.selectType;
-    }
-    let ic =  this.document.nativeElement.querySelector('#inputCla').value;
-    if ( ic === '' &&  ic !== undefined){
-          ic = '';
-    }
+      jobID = this.tableCell.selectID;
+    }*/
     const param = '{\n' +
-      '"method": "' + OtherParameters.JobRecord + '",\n' +
+      '"method": "' + OtherParameters.JobRecordDetail + '",\n' +
       '"data":{\n' +
-      '"status":"' + MonitorValue + '",\n' +
-      '"jobgroup":"' + selectType + '",\n' +
-      '"jobname":"' + ic + '" \n' +
+      '"jobname": "' + this.JobName + '",\n' +
+      '"jobid": ""\n' +
       '}\n' +
-      '}';
-     this.logAnalysisService.getTableData(param).pipe(takeUntil(this._unsubscribeAll)).subscribe( res => {
+      '}\n';
+    // document.getElementById(id ).scrollIntoView();
+     this.logAnalysisService.getTableData(param).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
          const errorCode = res['header'].errCode;
-         if (errorCode === '0'){
+         if (errorCode === '0') {
            const data = res['data'];
-           this.tableCell.bussTableSource = data;
-           this.tableCell.bfTableSource =  this.tableCell.bussTableSource ;
-         } else {
-           // this.snackBar.open(res['header'].errMsg, 'X');
+           const en: EleEntity[] = data;
+         //  this.tableCell.selectIDSource[0] = {value: '全部', name: '全部'};
+          /* for (let i = 0; i < data.length; i++) {
+             this.tableCell.selectIDSource[i + 1 ] = {value: data[i]['id_job'], name: data[i]['id_job']};
+           }*/
+           this.tableCell.bussTableSource = en;
          }
-      },
-      error1 => {
-       // this.snackBar.open('获取表格数据出错' + error1.message, 'X');
-        });
-
-
+       });
+   /* const errorCode = JSON.parse(res)['header'].errCode;
+    if (errorCode === '0') {
+      const data =  JSON.parse(res)['data'];
+      const en: EleEntity[] = data;
+      for (let i = 0; i < data.length; i++) {
+        this.tableCell.selectIDSource[i] = {value: data[i]['id_job'], name: data[i]['id_job']};
+      }
+      this.tableCell.bussTableSource = en;
+    }*/
   }
 
-  onSearch(){
-   const ic =  this.document.nativeElement.querySelector('#inputCla').value;
-   const laS = [];
-   if ( ic !== '' &&  ic !== undefined){
-     for (let i = 0 ; i < this.tableCell.bussTableSource.length ; i++){
-       if (this.tableCell.bussTableSource[i].JobName.includes(ic)){
-         laS.push(this.tableCell.bussTableSource[i]);
-       }
-     }
-     this.tableCell.bussTableSource = laS;
-   } else {
-     this.tableCell.bussTableSource = this.tableCell.bfTableSource;
-   }
-
-
-  }
-
-
-  TypeChange(){
-      console.log(this.tableCell.selectType  , '---this.tableCell.selectType');
-      console.log(this.tableCell.MonitorValue  , '---this.tableCell.MonitorValue');
-
-      if (this.tableCell.selectType === '客流') {
-         this.tableCell.bussTableSource = [
-          {RecordNumber: '0', type: '客流' , JobName: 'ods_mall_count' ,
-            LastExecutionTime: '1900/1/1 7:00:00', NextExecutionTime: '2019/11/22 14:39:45' , SuccessTimes: '0', FailTimes: '0', operation: 'operationC'} ,
-        ] ;
-      }
-      if (this.tableCell.selectType === '销售相关') {
-        this.tableCell.bussTableSource = [
-          {RecordNumber: '7', type: '销售相关' , JobName: 'ods_mall_sales' ,
-            LastExecutionTime: '2019/11/22 18:07:02', NextExecutionTime: '2019/11/22 18:17:49' , SuccessTimes: '1', FailTimes: '0', operation: 'operationC'} ,
-        ] ;
-      }
-      if (this.tableCell.selectType === '会员销售/积分') {
-        this.tableCell.bussTableSource = [
-          {RecordNumber: '4', type: '会员销售/积分' , JobName: 'ods_crm_2ledger_pool' ,
-            LastExecutionTime: '2019/11/22 15:27:11', NextExecutionTime: '2019/11/22 16:17:31' , SuccessTimes: '1', FailTimes: '0', operation: 'operationC'} ,
-        ] ;
-      }
-      if (this.tableCell.selectType === '会员主档资料') {
-        this.tableCell.bussTableSource = [
-          {RecordNumber: '5', type: '会员主档资料' , JobName: 'ods_crm_store' ,
-            LastExecutionTime: '2019/11/22 16:17:31', NextExecutionTime: '2019/11/22 16:40:36' , SuccessTimes: '2', FailTimes: '1', operation: 'operationC'} ,
-          {RecordNumber: '6', type: '会员主档资料' , JobName: 'ods_crm_vipinfo' ,
-            LastExecutionTime: '2019/11/22 14:58:57', NextExecutionTime: '2019/11/22 18:07:02' , SuccessTimes: '2', FailTimes: '0', operation: 'operationC'} ,
-        ] ;
-     }
-    if (this.tableCell.selectType === '合同主档信息') {
-      this.tableCell.bussTableSource = [
-        {RecordNumber: '1', type: '合同主档信息' , JobName: 'ods_mall_contractinfo' ,
-          LastExecutionTime: '1900/1/1 7:00:00', NextExecutionTime: '2019/11/22 14:45:13' , SuccessTimes: '0', FailTimes: '1', operation: 'operationC'} ,
-      ] ;
-    }
-    if (this.tableCell.selectType === '全部'){
-      this.tableCell.bussTableSource = [
-        {RecordNumber: '0', type: '客流' , JobName: 'ods_mall_count' ,
-          LastExecutionTime: '1900/1/1 7:00:00', NextExecutionTime: '2019/11/22 14:39:45' , SuccessTimes: '0', FailTimes: '0', operation: 'operationC'} ,
-        {RecordNumber: '1', type: '合同主档信息' , JobName: 'ods_mall_contractinfo' ,
-          LastExecutionTime: '1900/1/1 7:00:00', NextExecutionTime: '2019/11/22 14:45:13' , SuccessTimes: '0', FailTimes: '1', operation: 'operationC'} ,
-        {RecordNumber: '4', type: '会员销售/积分' , JobName: 'ods_crm_2ledger_pool' ,
-          LastExecutionTime: '2019/11/22 15:27:11', NextExecutionTime: '2019/11/22 16:17:31' , SuccessTimes: '1', FailTimes: '0', operation: 'operationC'} ,
-        {RecordNumber: '5', type: '会员主档资料' , JobName: 'ods_crm_store' ,
-          LastExecutionTime: '2019/11/22 16:17:31', NextExecutionTime: '2019/11/22 16:40:36' , SuccessTimes: '2', FailTimes: '1', operation: 'operationC'} ,
-        {RecordNumber: '6', type: '会员主档资料' , JobName: 'ods_crm_vipinfo' ,
-          LastExecutionTime: '2019/11/22 14:58:57', NextExecutionTime: '2019/11/22 18:07:02' , SuccessTimes: '2', FailTimes: '0', operation: 'operationC'} ,
-        {RecordNumber: '7', type: '销售相关' , JobName: 'ods_mall_sales' ,
-          LastExecutionTime: '2019/11/22 18:07:02', NextExecutionTime: '2019/11/22 18:17:49' , SuccessTimes: '1', FailTimes: '0', operation: 'operationC'} ,
-      ];
+  openDialog(DetailMatDialog , element){
+    this.tableCell.jobDetail = element.log_field.replace(/<br>/g,'\n');
+    if (!this.dialog.getDialogById('DetailMatDialogs')){
+      this.dialog.open( DetailMatDialog, {id: 'DetailMatDialogs',  width: '60%' , height: '70%'});
     }
   }
-
-  // 打开详情弹框
-  openDetailTemplate(DetailTemplate , element){
-      this.tableCell.JobName = element.jobname;
-     if (!this.dialog.getDialogById('tempDetails')){
-       this.dialog.open( DetailTemplate, {id: 'tempDetails',  width: '80%' , height: '80%'});
-     }
-  }
-
 
   // 任务执行时间图表
   SetTaskExecutionTimeChart(){
@@ -691,11 +645,6 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
   }
 
 
-  MonitorChange(){
-     console.log(this.tableCell.MonitorValue);
-  }
-
-
   intiAllECharts(){
     this.zone.runOutsideAngular(() => {
       this.echarts = require('echarts');
@@ -721,6 +670,10 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
     this.eChartsSource = new EChartSource();
   }
 
+  clickReturn(){
+    this.router.navigateByUrl('/logChart');
+  }
+
 
 
   ngOnDestroy(): void {
@@ -740,6 +693,59 @@ export class RelationDiagramChartComponent implements OnInit  , OnDestroy{
     this._unsubscribeAll.complete();
 
   }
+
+
+
+  // 获取表格数据
+  /* initTableDataSource(){
+
+     let  MonitorValue = '';
+     let  selectType = '';
+     if (this.tableCell.MonitorValue === '监控状态'){
+           MonitorValue = '';
+     } else {
+           MonitorValue = this.tableCell.MonitorValue;
+     }
+     if (this.tableCell.selectType === '请选择分类' || this.tableCell.selectType === '全部'){
+           selectType = '';
+     } else {
+           selectType = this.tableCell.selectType;
+     }
+     let ic =  this.document.nativeElement.querySelector('#inputCla').value;
+     if ( ic === '' &&  ic !== undefined){
+           ic = '';
+     }
+     const param = '{\n' +
+       '"method": "' + OtherParameters.JobRecord + '",\n' +
+       '"data":{\n' +
+       '"status":"' + MonitorValue + '",\n' +
+       '"jobgroup":"' + selectType + '",\n' +
+       '"jobname":"' + ic + '" \n' +
+       '}\n' +
+       '}';
+      this.logAnalysisService.getTableData(param).pipe(takeUntil(this._unsubscribeAll)).subscribe( res => {
+          const errorCode = res['header'].errCode;
+          if (errorCode === '0'){
+            const data = res['data'];
+            this.tableCell.bussTableSource = data;
+            this.tableCell.bfTableSource =  this.tableCell.bussTableSource ;
+          } else {
+            // this.snackBar.open(res['header'].errMsg, 'X');
+          }
+       },
+       error1 => {
+        // this.snackBar.open('获取表格数据出错' + error1.message, 'X');
+         });
+   }*/
+
+  // 打开详情弹框
+  /* openDetailTemplate(DetailTemplate , element){
+       this.tableCell.JobName = element.jobname;
+      if (!this.dialog.getDialogById('tempDetails')){
+        this.dialog.open( DetailTemplate, {id: 'tempDetails',  width: '80%' , height: '80%'});
+      }
+   }*/
+
 
 }
 
@@ -776,7 +782,7 @@ export class TaskQuantityDataSource {
 
 // 表格相关
 export class TableCell {
-  MonitorValue: string; // 监控状态
+ /* MonitorValue: string; // 监控状态
   MonitorValueSource: any; // 监控状态选择框的数据
   selectType: any; // 选择分类
   selectTypeSource: any  = []; // 选择分类选择框的数据
@@ -785,7 +791,14 @@ export class TableCell {
   bfTableSource: any = [];
   bussTableCol: any;
   bussTableHer: any;
-  JobName: string;
+  JobName: string;*/
+
+  bussTableSource: any;
+  bussTableCol: any = [];
+  bussTableHer: any = [];
+  selectID: any; // 选择分类
+  selectIDSource: any  = []; // 选择分类选择框的数据
+  jobDetail: any; // 当前详情数据
 }
 
 

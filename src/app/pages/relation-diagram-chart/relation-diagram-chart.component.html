@@ -1,6 +1,17 @@
 <div class="allFlex">
       <img src="assets\\images\\bg.jpg" class="bgImgC">
      <div class="childOneFlex">
+
+       <!--返回按钮-->
+        <div class="btu-return">
+            <div  class="re-btu mat-filed-96-50-write">
+                  <button mat-button (click)="clickReturn()">
+                    <img src="assets\\images\\return.png" class="imgIcon-w-h">
+                    返回
+                  </button>
+            </div>
+        </div>
+
        <!--最上面的部分四个图表-->
        <div class="topOne">
              <div class="OneChartsTopClass m-r-15"  #TaskExecutionTime><!--任务执行时间--></div>
@@ -57,8 +68,20 @@
                     <span class="table-text-size">作业监控记录</span>
              </div>
            <!--选择部分-->
-           <div class="end-table-search">
-             <!--监控状态-->
+          <!-- <div class="end-table-search">
+          &lt;!&ndash;   <div class="btu-select">
+               <div class="temp-oneSelect mat-filed-96-50-write">
+                 <mat-form-field [floatLabel]="'auto'"  >
+                   <mat-select [(value)]="tableCell.selectID"  (selectionChange)="initTableDataDetailSource()">
+                     <mat-option  *ngFor="let d of tableCell.selectIDSource" [value]="d.value"> {{d.name}}</mat-option>
+                   </mat-select>
+                 </mat-form-field>
+               </div>
+               <div class="temp-input">
+                 <button mat-button (click)="initTableDataDetailSource()">搜索</button>
+               </div>
+             </div>&ndash;&gt;
+             &lt;!&ndash;监控状态
              <div class="oneSelect mat-filed-96-50-write">
                <mat-form-field [floatLabel]="'auto'" >
                  <mat-select [(value)]="tableCell.MonitorValue"  placeholder="监控状态"   (selectionChange)="initTableDataSource()">
@@ -66,7 +89,7 @@
                  </mat-select>
                </mat-form-field>
              </div>
-             <!--选择分类-->
+             &lt;!&ndash;选择分类&ndash;&gt;
              <div class="oneSelect mat-filed-96-50-write">
                <mat-form-field [floatLabel]="'auto'" >
                  <mat-select [(value)]="tableCell.selectType"  placeholder="选择分类"  (selectionChange)="initTableDataSource()">
@@ -74,21 +97,21 @@
                  </mat-select>
                </mat-form-field>
              </div>
-             <!--输入信息-->
+             &lt;!&ndash;输入信息&ndash;&gt;
              <div class="inputText mat-filed-96-50" >
                <mat-form-field [floatLabel]="'never'">
                  <input matInput  autocomplete="off" type="text" value="{{tableCell.inputData}}" placeholder="请输入作业名称..."  class="inputCla" id="inputCla">
                  <button  mat-icon-button   matSuffix class="btuColor" (click)="initTableDataSource()">
-                   <!--<mat-icon >search</mat-icon>-->
+                   &lt;!&ndash;<mat-icon >search</mat-icon>&ndash;&gt;
                    <img src="assets\\images\\search.png">
                  </button>
                </mat-form-field>
-             </div>
-           </div>
+             </div>&ndash;&gt;
+           </div>-->
            <!--表单部分-->
            <div class="form-table-class">
                 <div class="table-class-all">
-                  <mat-table [dataSource]="tableCell.bussTableSource" class="buss-data-table">
+                 <!-- <mat-table [dataSource]="tableCell.bussTableSource" class="buss-data-table">
                     <ng-container *ngFor="let cou of tableCell.bussTableCol ; index as k;">
                       <ng-container matColumnDef={{cou}}>
                         <mat-header-cell *matHeaderCellDef>
@@ -105,18 +128,76 @@
                           </ng-container>
                         </mat-cell>
                       </ng-container>
-
                     </ng-container>
                     <mat-header-row
                       *matHeaderRowDef="tableCell.bussTableCol; sticky: true"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: tableCell.bussTableCol;"></mat-row>
-                  </mat-table>
+                  </mat-table>-->
+                  <!--<mat-table  [dataSource]="tableCell.bussTableSource"  class="buss-data-table"   (scroll)="scrollT($event)">
+                    <ng-container  matColumnDef="{{cou}}" *ngFor="let cou of tableCell.bussTableCol ; index as k;">
+                      <mat-header-cell   *matHeaderCellDef>
+                        <div *ngFor="let heard of tableCell.bussTableHer"> {{heard[cou]}}</div>
+                      </mat-header-cell>
+
+                        <mat-cell  *matCellDef="let element ; index as i;" >
+                          <ng-container *ngIf="'log_field' !== cou">
+                            <span [matTooltip]="element[cou]">{{element[cou]}} </span>
+                          </ng-container>
+                          <ng-container *ngIf="'log_field' === cou">
+                            <a (click)="openDialog(DetailMatDialog , element)">查看</a>
+                          </ng-container>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row
+                      *matHeaderRowDef="tableCell.bussTableCol; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: tableCell.bussTableCol" ></mat-row>
+                  </mat-table>-->
+
+                  <table  class="table-v-c">
+                    <thead>
+                    <tr class="table-v-c-tr-1">
+                      <th>记录编号</th>
+                      <th>作业名称</th>
+                      <th>执行开始时间</th>
+                      <th>执行结束时间</th>
+                      <th>运行状态</th>
+                      <th>查看详情</th>
+                    </tr>
+                    </thead>
+                   <tbody>
+                   <ng-container *ngFor="let element of tableCell.bussTableSource">
+                     <tr>
+                       <th>{{element['id_job']}}</th> <!-- [matTooltip]="element['id_job']"-->
+                       <th >{{element['jobname']}}</th> <!-- [matTooltip]="element['jobname']"-->
+                       <th >{{element['enddate']}}</th> <!--[matTooltip]="element['enddate']"-->
+                       <th >{{element['logdate']}}</th> <!-- [matTooltip]="element['logdate']"-->
+                       <th >{{element['status']}}</th>  <!-- [matTooltip]="element['status']"-->
+                       <th> <a (click)="openDialog(DetailMatDialog , element)">查看</a></th>
+                     </tr>
+                   </ng-container>
+                   </tbody>
+                  </table>
                 </div>
            </div>
          </div>
        </div>
      </div>
 </div>
-<ng-template #DetailTemplate >
-  <app-detail-template [jobName]="tableCell.JobName"></app-detail-template>
+<!--<ng-template #DetailTemplate >
+  <app-detail-template [jobName]="JobName"></app-detail-template>
+</ng-template>-->
+<ng-template #DetailMatDialog class="ng-template-me-dialog">
+  <div mat-dialog-title class="dialog-manage-title">
+    <div class="mat-dialog-title-tips">
+      <div ><span class="title_dialog_">操作详情</span></div>
+      <div><button  mat-icon-button 	 mat-dialog-close ><mat-icon>clear</mat-icon></button></div>
+    </div>
+  </div>
+  <mat-dialog-content>
+    <div class="content-class mat-input-te">
+      <mat-form-field>
+        <textarea matInput autocomplete="off"   value="{{tableCell.jobDetail}}"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
 </ng-template>

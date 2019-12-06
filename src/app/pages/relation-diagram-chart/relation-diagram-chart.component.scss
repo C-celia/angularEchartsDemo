@@ -22,10 +22,35 @@
   position: absolute;
   overflow: auto;
   z-index: 2;
+  .btu-return{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .re-btu{
+      width: 96%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      button{
+        img{
+          width: 20px;
+          height: 20px;
+          padding-bottom: 4px;
+        }
+        width: 6%;
+        background-color: #00A9D4;
+        font-size: 16px;
+        color: #FFFFFF;
+      }
+    }
+  }
 }
 .topOne{
   width: 96%;
-  height: 37%;
+  height: 33%;
   min-width: 1280px;
   min-height: 214px;
   display: flex;
@@ -35,7 +60,7 @@
 .OneChartsTopClass{
   width: 25%;
   display: flex;
-  height: 85%;
+  height: 100%;
   background-color: rgba( 255 , 255 ,255, 0.1 );
   border-radius: 12px;
 }
@@ -118,6 +143,13 @@
   min-height: 64px;
   justify-content: flex-end;
   align-items: center;
+  .btu-select{
+    width: 34%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 
@@ -152,14 +184,13 @@
 
 .form-table-class{
    width: 100%;
-   height: 230px;
+   height: 300px;
   //  min-height: 150px;
    display: flex;
    align-items: center;
-   justify-content: center;
    .table-class-all{
       width: 98%;
-      height: 230px;
+      height: 280px;
        /// min-height: 150px;
       display: flex;
    }
@@ -170,7 +201,7 @@
   // border-bottom: 1px solid rgba(0, 0, 0, .12);
   overflow: auto;
   width: 100%;
-  max-height: 230px;
+  max-height: 280px;  // 230
   // min-height: 150px;
   border-radius: 12px;
   color: #FFFFFF;
@@ -178,7 +209,7 @@
   user-select: text !important;
 
   .mat-header-row {
-    min-height: 50px;
+    height: 50px;
     font-size: 12px;
     color: #FFFFFF;
     user-select: text !important;
@@ -187,9 +218,12 @@
     color: #FFFFFF;
     user-select: text !important;
   }
+
+
   .mat-cell {
     min-width: 0;
-    max-height: 150px;
+   // overflow: auto;
+    max-height: 200px;
     display: flex;
     align-items: center;
     font-size: 12px;
@@ -442,6 +476,7 @@ cursor: pointer;
     text-decoration: none;
     mat-select{
       text-decoration: none;
+      height: 100%;
       mat-option{
         text-decoration: none;
       }
@@ -511,4 +546,142 @@ cursor: pointer;
       transform: scaleY(0);
     }
   }
+}
+
+
+
+.dialog-manage-title{
+  display: flex;
+  width: 100%;
+  height: 12%;
+  justify-content: space-between;
+  align-items: center;
+  // background-color: #2B96D8;
+  .mat-dialog-title-tips{
+    display: flex;
+    width: 98%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    .title_dialog_{
+      font-size: 1.3rem;
+      color: #000000;
+    }
+    button{
+      mat-icon{
+        color: #24C6C8;
+      }
+    }
+  }
+
+}
+.content-class{
+  width: 100%;
+  height: 400px;
+  //  overflow: auto;
+}
+
+::ng-deep{
+  #DetailMatDialogs{
+    .mat-dialog-title {
+      margin: 0px;
+    }
+    .mat-dialog-content{
+      overflow: hidden;
+    }
+  }
+}
+
+
+
+.mat-input-te{
+  mat-form-field{
+    width: 100%;
+    height: 400px;
+    .mat-form-field-wrapper{
+      height: 400px;
+    }
+    textarea{
+      height: 350px;
+      overflow: auto;
+    }
+  }
+  ::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      height: 400px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+      padding: 0em ;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+      margin: 0em;
+    }
+    .mat-form-field-flex{
+      //  height: 35px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-label {
+      top: 2.884375em;
+      margin-top: -0.7em;
+    }
+  }
+}
+
+
+
+.temp-oneSelect{
+  width: 48%;
+  height: 60%;
+  display: flex;
+}
+.temp-input{
+  width: 48%;
+  height: 60%;
+  display: flex;
+  button{
+    background-color: #FFFFFF;
+  }
+}
+
+.table-v-c{
+  width: 100%;
+  height: 280px;
+  thead{
+   // width: 100%;
+    height: 50px;
+    width: calc( 100% - 1em);
+    .table-v-c-tr-1{
+      display: block;
+      width: 100%;
+      height: 50px;
+      th{
+        width: 19.17%;
+        height: 50px;
+        max-width: 205px;
+        font-size: 12px;
+        color: #FFFFFF;
+      }
+    }
+  }
+  tbody{
+    display: block;
+    width: 100%;
+    height: 220px;
+    overflow-y: auto;
+    tr{
+      width: 100%;
+      height: 50px;
+      th{
+        font-weight: 500;
+        width: 19.557%;
+        max-width: 205px;
+        font-size: 12px;
+        color: #FFFFFF;
+       /* overflow: hidden;
+        white-space: pre-wrap;
+        text-overflow: ellipsis;*/
+        user-select: text !important;
+      }
+    }
+  }
+
 }

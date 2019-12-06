@@ -23,7 +23,7 @@ import {DetailTemplateModule} from '../detail-template/detail-template.module';
     MatSnackBarModule,
     MatTooltipModule,
     DetailTemplateModule,
-    RouterModule.forChild([{path: 'Relation', component: RelationDiagramChartComponent}]),
+    RouterModule.forChild([{path: 'Relation/:id', component: RelationDiagramChartComponent}]),
   ],
 })
 export class RelationDiagramChartModule { }

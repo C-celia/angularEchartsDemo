@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {EventManager} from '@angular/platform-browser';
-import { Router} from '@angular/router';
+import {Params, Router} from '@angular/router';
 import {OtherParameters} from '../../service/log-analysis/OtherParameters';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog, MatPaginator,  MatTableDataSource} from '@angular/material';
@@ -43,9 +43,6 @@ export class LogAnalysisChartComponent implements OnInit  , OnDestroy{
     ) { }
 
   ngOnInit() {
-    this.eventManager.addGlobalEventListener('window', 'keydown.backspace', () => {
-      this.router.navigateByUrl('/Relation');
-    });
       this.initTablePram();
       this.aboutECharts();
       this.initData();
@@ -179,7 +176,7 @@ export class LogAnalysisChartComponent implements OnInit  , OnDestroy{
                }
            },
 
-         xAxis : [{
+        /* xAxis : [{
            type : 'value',
            splitLine: {
              show: false
@@ -218,7 +215,7 @@ export class LogAnalysisChartComponent implements OnInit  , OnDestroy{
            axisLine: {
              show: false
            },
-         }],
+         }],*/
          series: [
            {
             force: {
@@ -555,7 +552,7 @@ export class LogAnalysisChartComponent implements OnInit  , OnDestroy{
               'name': 'superClass' },
           ], // 关系对应
     },
-           {
+         /*  {
              type: 'effectScatter',
              data: [
                {value: [-220, 400 ] ,
@@ -733,23 +730,30 @@ export class LogAnalysisChartComponent implements OnInit  , OnDestroy{
              },
              zlevel: 12,
              z: 12
-           }
+           }*/
          ]
        };
        this.logRelationship.setOption(option);
        this.logRelationship.on('click',  (params) => {
 
-        if (params.componentSubType === 'effectScatter') {
+      /*  if (params.componentSubType === 'effectScatter') {
            if (params.value.length > 2){
              this.jobName = params.value[3];
-             setTimeout( res => {
+             /!*setTimeout( res => {
                this.initTableData('dep');
-             });
+             });*!/
+            this.router.navigateByUrl('Relation/' + this.jobName );
            }
-         }
-        /*if (params.value === 'needDialog'){
-
-        }*/
+         }*/
+        if (params.value === 'needDialog'){
+          this.jobName = params.name;
+          this.router.navigate(['Relation/' + this.jobName]).finally( () => {
+            // 因为当前环境相当于是echart环境。
+            // 不属于angular环境。所以跳转页面，没有加载component。
+            // 所以需要在跳转完成后刷新一下页面。太扯了
+            location.reload();
+          });
+        }
     });
    }
 
